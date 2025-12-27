@@ -1,50 +1,51 @@
-name: Build huggingface Image
+名称：构建 huggingface 图像
 
-on:
-  push:
-    branches: [ hug ]
-    paths:
+在：
+  推:
+    分支：[ 拥抱 ]
+    路径：
       - 'Dockerfile'
       - 'index.js'
       - 'package.json'
       - 'index.html'
-  pull_request:
-    branches: [ hug ]
-  workflow_dispatch:
+  拉取请求:
+    分支：[ 拥抱 ]
+  工作流触发:
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+工作：
+  构建：
+    运行于：ubuntu-latest
+    权限：
+      目录：
+阅读
+      套件： 写
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          ref: hug 
+    步骤：
+      - 名称: 检出仓库
+        使用：actions/checkout@v4
+        与：
+          参考： 拥抱
 
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      - 名称: 登录 GitHub 容器注册表
+        使用：docker/login-action@v3
+        与：
+          注册表：ghcr.io
+          用户名：${{ github.演员 }}
+          密码：${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      - 名称: 设置Docker Buildx
+        使用：docker/setup-buildx-action@v3
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/webbibi:latest
-          labels: |
-            org.opencontainers.image.source=https://github.com/${{ github.repository }}
-            org.opencontainers.image.description=http server
+      - 名称: 构建并推送Docker镜像
+        使用：docker/build-push-action@v5
+        与：
+          上下文：.
+          推： 真
+          标签： |
+            ghcr.io/${{ github.repository_owner }}/welinzs:最新
+          标签： |
+            org.opencontainers.image.source=https://github.com/${{ github.仓库 }}
+            org.opencontainers.image.description=http 服务器
             org.opencontainers.image.licenses=MIT
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          缓存来源：类型=gha
+          缓存到： 类型=gha，模式=max
